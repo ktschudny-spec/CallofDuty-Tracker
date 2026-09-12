@@ -17,15 +17,15 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #000000;
-    color: #ffffff;
+    background: #eeeeee;
+    color: #222222;
 }
 
 .page {
     max-width: 1050px;
     margin: 20px auto;
-    background: #111111;
-    border: 1px solid #ff6600;
+    background: white;
+    border: 1px solid #999999;
     min-height: 90vh;
 }
 
@@ -97,7 +97,6 @@ body {
     font-size: 28px;
     font-weight: bold;
     padding: 22px;
-    background: #000000;
 }
 
 .navigation {
@@ -108,14 +107,13 @@ body {
 .navigation button {
     margin: 0 5px;
     padding: 9px 15px;
-    background: #000000;
-    border: 1px solid #ff6600;
+    background: white;
+    border: 1px solid #777777;
     cursor: pointer;
 }
 
 .navigation button:hover {
-    background: #ff6600;
-    color: #000000;
+    background: #eeeeee;
 }
 
 .player {
@@ -154,7 +152,6 @@ h2 {
     font-size: 18px;
     margin-top: 0;
     margin-bottom: 18px;
-    color: #ff6600;
 }
 
 ol {
@@ -164,7 +161,6 @@ ol {
 li {
     margin: 15px 0;
     font-weight: bold;
-    color: #ffffff;
 }
 
 .maps {
@@ -457,12 +453,6 @@ const mostUsedNames = [
     "K9 Unit",
     "Counter UAV",
     "VTOL Warship"
-    "Hellstorm"
-    "XS1 Goliath"
-    "Paladin"
-    "Glide Bomb"
-    "Artillery Barrage"
-    "Flak Guns"
 ];
 
 const leastUsedNames = [
@@ -471,10 +461,6 @@ const leastUsedNames = [
     "D.A.W.G",
     "Watchdog Helo",
     "Gravemaker"
-    "Guardian"
-    "Lightning Strike"
-    "Death Machine"
-    "War Machine"
 ];
 
 const maps = [
@@ -490,12 +476,6 @@ const maps = [
     "Standoff",
     "Piccadilly",
     "Vacant"
-    "Aquarium"
-    "Combine"
-    "Evac"
-    "Havoc"
-    "Metro"
-    "Infection"
 ];
 
 function randomNumber(min, max) {
@@ -577,14 +557,14 @@ function generateStats() {
         .textContent =
             username +
             " #" +
-            randomNumber(100, 5000);
+            randomNumber(100, 999);
 
     document
         .getElementById("kills")
         .textContent =
             randomNumber(
                 10000,
-                100000
+                99999
             ).toLocaleString();
 
     document
@@ -592,13 +572,13 @@ function generateStats() {
         .textContent =
             randomNumber(
                 8000,
-                100000
+                99999
             ).toLocaleString();
 
     document
         .getElementById("highestStreak")
         .textContent =
-            randomNumber(10, 40);
+            randomNumber(10, 50);
 
     createScorestreakList(
         "mostUsedScorestreaks",
