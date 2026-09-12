@@ -754,7 +754,37 @@ function logout() {
         .value = "";
 
 }
+function logout () {
+    document.getElementById("statsPage").classlist.add("hidden"); 
+    document.getElementById("loginPage").classList.remove("hidden");
+}
+    document.addEventListener("keydown", function(event) {
+        const statsPage = document.getElementById("statPage");
 
+        if (statsPage.classList.contains("hidden")) {
+            return; 
+        }
+        const buttons = document.querySelectorAll(".top-buttons button");
+
+        const current = document.activeElement; 
+
+        if (current !== buttons[0] && current !== buttons[1]) {
+            return;
+        }
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+            event.preventDefault();
+            buttons[1].focus(); 
+        }
+         if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+            event.preventDefault();
+            buttons[0].focus(); 
+         }
+        if (event.key === "Enter") {
+            event.preventDefault(); 
+            current.click();
+        }
+    });
+    
 </script>
 
 </body>
