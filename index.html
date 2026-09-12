@@ -1,7 +1,5 @@
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,181 +14,191 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #080808;
+    min-height: 100vh;
+    background: #171313;
     color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.page {
+    width: 92%;
+    min-height: 88vh;
+    margin: 6vh auto;
+    border: 3px solid #ff8c00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 450px;
+    padding: 55px 45px;
+    border: 3px solid #ff8c00;
+    background: rgba(35, 25, 25, 0.85);
+    text-align: center;
+}
+
+.login-box h1 {
+    margin: 0 0 12px;
+    color: #ff8c00;
+    font-size: 30px;
+}
+
+.login-box h2 {
+    margin: 0 0 28px;
+    font-size: 16px;
+}
+
+.login-box input {
+    width: 100%;
+    height: 48px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #392727;
+    border: 2px solid #ff8c00;
+    color: white;
+    font-size: 15px;
+}
+
+.login-box input::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.login-box button {
+    width: 100%;
+    height: 48px;
+    border: none;
+    background: #ff9800;
+    color: #111;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background: #ffad32;
 }
 
 .hidden {
     display: none !important;
 }
 
-.page {
-    min-height: 100vh;
-    padding: 40px 20px;
+.stats-container {
+    width: 92%;
+    min-height: 88vh;
+    margin: 6vh auto;
+    border: 3px solid #ff8c00;
+    padding: 35px;
 }
 
-.login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.login-box {
-    width: 100%;
-    max-width: 500px;
-    background: #151515;
-    border: 2px solid #f57c00;
-    border-radius: 12px;
-    padding: 40px;
+.stats-title {
     text-align: center;
-    box-shadow: 0 0 25px rgba(245, 124, 0, 0.25);
+    color: #ff8c00;
+    font-size: 32px;
+    margin: 0 0 8px;
 }
 
-h1 {
-    margin-top: 0;
-    color: #f57c00;
-    font-size: 42px;
-}
-
-.login-box h2 {
+.player-name {
+    text-align: center;
+    font-size: 18px;
     margin-bottom: 25px;
 }
 
-input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 18px;
-    border: 1px solid #555;
-    border-radius: 6px;
-    background: #222;
-    color: white;
-    font-size: 17px;
+.top-buttons {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-.login-button,
-.generate-button,
-.logout-button {
+.top-buttons button {
+    padding: 12px 22px;
+    margin: 5px;
     border: none;
-    border-radius: 6px;
-    padding: 14px 22px;
-    font-size: 16px;
-    font-weight: bold;
     cursor: pointer;
+    font-weight: bold;
 }
 
-.login-button,
-.generate-button {
-    background: #f57c00;
-    color: black;
+.generate {
+    background: #ff9800;
+    color: #111;
 }
 
-.logout-button {
+.logout {
     background: #333;
     color: white;
 }
 
-.login-button:hover,
-.generate-button:hover {
-    background: #ff9800;
-}
-
-.logout-button:hover {
-    background: #444;
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.header h1 {
-    margin-bottom: 10px;
-}
-
-.username-display {
-    color: #bbb;
-    font-size: 18px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.stats-grid {
+.main-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 18px;
     margin-bottom: 25px;
 }
 
-.stat-card {
-    background: #151515;
-    border: 1px solid #f57c00;
-    border-radius: 10px;
-    padding: 25px;
+.stat-box {
+    border: 2px solid #ff8c00;
+    background: #241a1a;
     text-align: center;
+    padding: 25px;
 }
 
-.stat-card h3 {
-    color: #f57c00;
+.stat-box h3 {
+    color: #ff8c00;
     margin-top: 0;
 }
 
 .stat-number {
-    font-size: 38px;
+    font-size: 35px;
     font-weight: bold;
 }
 
-.section {
-    background: #151515;
-    border: 1px solid #333;
-    border-radius: 10px;
+.scorestreak-section {
+    border: 2px solid #ff8c00;
+    background: #241a1a;
     padding: 25px;
     margin-bottom: 25px;
 }
 
-.section h2 {
-    color: #f57c00;
+.scorestreak-section h2 {
+    color: #ff8c00;
+    text-align: center;
     margin-top: 0;
 }
 
-.scorestreak-list {
+.scorestreaks {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
+    gap: 10px;
 }
 
 .scorestreak {
-    background: #222;
-    border: 1px solid #444;
-    border-radius: 7px;
     padding: 15px 8px;
+    background: #352626;
+    border: 1px solid #555;
     text-align: center;
-    font-weight: bold;
+}
+
+.maps-section {
+    border: 2px solid #ff8c00;
+    background: #241a1a;
+    padding: 25px;
+}
+
+.maps-section h2 {
+    color: #ff8c00;
+    text-align: center;
 }
 
 .maps {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 25px;
 }
 
 .map-card {
-    background: #222;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #444;
+    background: #352626;
+    border: 1px solid #555;
+    padding-bottom: 15px;
+    text-align: center;
 }
 
 .map-card img {
@@ -200,28 +208,21 @@ input {
     display: block;
 }
 
-.map-info {
-    padding: 18px;
+.map-card h3 {
+    color: #ff8c00;
+    margin-bottom: 5px;
 }
 
-.map-info h3 {
-    color: #f57c00;
-    margin: 0 0 8px 0;
-}
-
-.description {
-    text-align: center;
-    color: #aaa;
-    line-height: 1.6;
-    padding: 20px;
+.map-card p {
+    margin: 0;
 }
 
 @media (max-width: 800px) {
-    .stats-grid {
+    .main-stats {
         grid-template-columns: 1fr;
     }
 
-    .scorestreak-list {
+    .scorestreaks {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -229,18 +230,8 @@ input {
         grid-template-columns: 1fr;
     }
 
-    h1 {
-        font-size: 32px;
-    }
-}
-
-@media (max-width: 500px) {
-    .login-box {
-        padding: 25px;
-    }
-
-    .scorestreak-list {
-        grid-template-columns: 1fr;
+    .stats-container {
+        padding: 20px;
     }
 }
 </style>
@@ -248,116 +239,131 @@ input {
 
 <body>
 
-<div id="loginPage" class="login-page">
+<div id="loginPage" class="page">
+
     <div class="login-box">
+
         <h1>Call of Duty Tracker</h1>
+
         <h2>Sign Up / Login</h2>
 
-        <label for="username">Call of Duty Username</label>
         <input
             id="username"
             type="text"
-            placeholder="Enter your username"
-            autocomplete="username"
+            placeholder="Enter Call of Duty username"
+            aria-label="Enter Call of Duty username"
         >
 
         <button
-            class="login-button"
             type="button"
             onclick="viewStats()"
         >
             VIEW MY STATS
         </button>
+
     </div>
+
 </div>
 
-<div id="statsPage" class="page hidden">
-    <div class="container">
+<div id="statsPage" class="stats-container hidden">
 
-        <div class="header">
-            <h1>Call of Duty Tracker</h1>
-            <div id="usernameDisplay" class="username-display"></div>
+    <h1 class="stats-title">Call of Duty Tracker</h1>
+
+    <div id="playerName" class="player-name"></div>
+
+    <div class="top-buttons">
+
+        <button
+            class="generate"
+            type="button"
+            onclick="generateStats()"
+        >
+            GENERATE NEW STATS
+        </button>
+
+        <button
+            class="logout"
+            type="button"
+            onclick="logout()"
+        >
+            LOG OUT
+        </button>
+
+    </div>
+
+    <div class="main-stats">
+
+        <div class="stat-box">
+            <h3>Kills</h3>
+            <div id="kills" class="stat-number">0</div>
         </div>
 
-        <div class="buttons">
-            <button
-                class="generate-button"
-                type="button"
-                onclick="generateStats()"
-            >
-                GENERATE NEW STATS
-            </button>
-
-            <button
-                class="logout-button"
-                type="button"
-                onclick="logout()"
-            >
-                LOG OUT
-            </button>
+        <div class="stat-box">
+            <h3>Deaths</h3>
+            <div id="deaths" class="stat-number">0</div>
         </div>
 
-        <div class="stats-grid">
-
-            <div class="stat-card">
-                <h3>Kills</h3>
-                <div id="kills" class="stat-number">0</div>
-            </div>
-
-            <div class="stat-card">
-                <h3>Deaths</h3>
-                <div id="deaths" class="stat-number">0</div>
-            </div>
-
-            <div class="stat-card">
-                <h3>Highest Streak</h3>
-                <div id="streak" class="stat-number">0</div>
-            </div>
-
-        </div>
-
-        <div class="section">
-            <h2>Most Used Scorestreaks</h2>
-            <div id="mostUsed" class="scorestreak-list"></div>
-        </div>
-
-        <div class="section">
-            <h2>Least Used Scorestreaks</h2>
-            <div id="leastUsed" class="scorestreak-list"></div>
-        </div>
-
-        <div class="section">
-            <h2>Maps</h2>
-
-            <div class="maps">
-
-                <div class="map-card">
-                    <img id="mostPlayedImage" src="images/rust.jpg" alt="Most played Call of Duty map">
-                    <div class="map-info">
-                        <h3>Most Played Map</h3>
-                        <div id="mostPlayed">Rust</div>
-                    </div>
-                </div>
-
-                <div class="map-card">
-                    <img id="leastPlayedImage" src="images/piccadilly.jpg" alt="Least played Call of Duty map">
-                    <div class="map-info">
-                        <h3>Least Played Map</h3>
-                        <div id="leastPlayed">Piccadilly</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="section description">
-            <p>
-                Call of Duty Tracker allows players to view randomly generated
-                statistics, scorestreaks, and maps from their Call of Duty profile.
-            </p>
+        <div class="stat-box">
+            <h3>Highest Streak</h3>
+            <div id="streak" class="stat-number">0</div>
         </div>
 
     </div>
+
+    <div class="scorestreak-section">
+
+        <h2>Most Used Scorestreaks</h2>
+
+        <div id="mostUsed" class="scorestreaks"></div>
+
+    </div>
+
+    <div class="scorestreak-section">
+
+        <h2>Least Used Scorestreaks</h2>
+
+        <div id="leastUsed" class="scorestreaks"></div>
+
+    </div>
+
+    <div class="maps-section">
+
+        <h2>Maps</h2>
+
+        <div class="maps">
+
+            <div class="map-card">
+
+                <img
+                    id="mostPlayedImage"
+                    src="images/rust.jpg"
+                    alt="Most played Call of Duty map"
+                >
+
+                <h3>Most Played Map</h3>
+
+                <p id="mostPlayed">Rust</p>
+
+            </div>
+
+            <div class="map-card">
+
+                <img
+                    id="leastPlayedImage"
+                    src="images/piccadilly.jpg"
+                    alt="Least played Call of Duty map"
+                >
+
+                <h3>Least Played Map</h3>
+
+                <p id="leastPlayed">Piccadilly</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script>
@@ -395,147 +401,130 @@ const scorestreaks = [
 ];
 
 const maps = [
-    {
-        name: "Rust",
-        image: "images/rust.jpg"
-    },
-    {
-        name: "Nuketown",
-        image: "images/nuketown.jpg"
-    },
-    {
-        name: "Shipment",
-        image: "images/shipment.jpg"
-    },
-    {
-        name: "Terminal",
-        image: "images/terminal.jpg"
-    },
-    {
-        name: "Raid",
-        image: "images/raid.jpg"
-    },
-    {
-        name: "Highrise",
-        image: "images/highrise.jpg"
-    },
-    {
-        name: "Firing Range",
-        image: "images/firing-range.jpg"
-    },
-    {
-        name: "Crash",
-        image: "images/crash.jpg"
-    },
-    {
-        name: "Shoot House",
-        image: "images/shoot-house.jpg"
-    },
-    {
-        name: "Standoff",
-        image: "images/standoff.jpg"
-    },
-    {
-        name: "Piccadilly",
-        image: "images/piccadilly.jpg"
-    },
-    {
-        name: "Vacant",
-        image: "images/vacant.jpg"
-    }
+    ["Rust", "images/rust.jpg"],
+    ["Nuketown", "images/nuketown.jpg"],
+    ["Shipment", "images/shipment.jpg"],
+    ["Terminal", "images/terminal.jpg"],
+    ["Raid", "images/raid.jpg"],
+    ["Highrise", "images/highrise.jpg"],
+    ["Firing Range", "images/firing-range.jpg"],
+    ["Crash", "images/crash.jpg"],
+    ["Shoot House", "images/shoot-house.jpg"],
+    ["Standoff", "images/standoff.jpg"],
+    ["Piccadilly", "images/piccadilly.jpg"],
+    ["Vacant", "images/vacant.jpg"]
 ];
 
-function getRandomNumber(min, max) {
+function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function shuffle(array) {
-    return [...array].sort(() => Math.random() - 0.5);
+    const newArray = [...array];
+
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+
+    return newArray;
 }
 
 function viewStats() {
-    const usernameInput = document.getElementById("username");
-    const username = usernameInput.value.trim();
+
+    const username = document
+        .getElementById("username")
+        .value
+        .trim();
 
     if (username === "") {
         alert("Please enter a Call of Duty username.");
-        usernameInput.focus();
         return;
     }
 
-    document.getElementById("usernameDisplay").textContent =
+    document.getElementById("playerName").textContent =
         "Player: " + username;
 
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("statsPage").classList.remove("hidden");
+    document
+        .getElementById("loginPage")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("statsPage")
+        .classList
+        .remove("hidden");
 
     generateStats();
 }
 
 function generateStats() {
-    const kills = getRandomNumber(1000, 25000);
-    const deaths = getRandomNumber(500, 15000);
-    const streak = getRandomNumber(5, 50);
 
     document.getElementById("kills").textContent =
-        kills.toLocaleString();
+        randomNumber(1000, 25000).toLocaleString();
 
     document.getElementById("deaths").textContent =
-        deaths.toLocaleString();
+        randomNumber(500, 15000).toLocaleString();
 
     document.getElementById("streak").textContent =
-        streak;
+        randomNumber(5, 50);
 
-    const shuffledScorestreaks = shuffle(scorestreaks);
+    const randomScorestreaks = shuffle(scorestreaks);
 
-    const mostUsed = shuffledScorestreaks.slice(0, 5);
-    const leastUsed = shuffledScorestreaks.slice(5, 10);
+    const mostUsed = randomScorestreaks.slice(0, 5);
 
-    document.getElementById("mostUsed").innerHTML = "";
+    const leastUsed = randomScorestreaks.slice(5, 10);
 
-    mostUsed.forEach(function(streak) {
-        const div = document.createElement("div");
-        div.className = "scorestreak";
-        div.textContent = streak;
-        document.getElementById("mostUsed").appendChild(div);
-    });
+    document.getElementById("mostUsed").innerHTML =
+        mostUsed
+            .map(function(item) {
+                return '<div class="scorestreak">' + item + '</div>';
+            })
+            .join("");
 
-    document.getElementById("leastUsed").innerHTML = "";
+    document.getElementById("leastUsed").innerHTML =
+        leastUsed
+            .map(function(item) {
+                return '<div class="scorestreak">' + item + '</div>';
+            })
+            .join("");
 
-    leastUsed.forEach(function(streak) {
-        const div = document.createElement("div");
-        div.className = "scorestreak";
-        div.textContent = streak;
-        document.getElementById("leastUsed").appendChild(div);
-    });
+    const randomMaps = shuffle(maps);
 
-    const shuffledMaps = shuffle(maps);
+    const mostPlayed = randomMaps[0];
 
-    const mostPlayed = shuffledMaps[0];
-    const leastPlayed = shuffledMaps[1];
+    const leastPlayed = randomMaps[1];
 
     document.getElementById("mostPlayed").textContent =
-        mostPlayed.name;
+        mostPlayed[0];
 
     document.getElementById("mostPlayedImage").src =
-        mostPlayed.image;
+        mostPlayed[1];
 
     document.getElementById("mostPlayedImage").alt =
-        "Image of " + mostPlayed.name + " map";
+        "Image of " + mostPlayed[0];
 
     document.getElementById("leastPlayed").textContent =
-        leastPlayed.name;
+        leastPlayed[0];
 
     document.getElementById("leastPlayedImage").src =
-        leastPlayed.image;
+        leastPlayed[1];
 
     document.getElementById("leastPlayedImage").alt =
-        "Image of " + leastPlayed.name + " map";
+        "Image of " + leastPlayed[0];
 }
 
 function logout() {
-    document.getElementById("statsPage").classList.add("hidden");
-    document.getElementById("loginPage").classList.remove("hidden");
+
+    document
+        .getElementById("statsPage")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("loginPage")
+        .classList
+        .remove("hidden");
 
     document.getElementById("username").value = "";
 }
