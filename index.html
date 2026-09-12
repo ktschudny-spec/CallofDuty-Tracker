@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,15 +18,15 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #eeeeee;
-    color: #222222;
+    background: #000000;
+    color: #ffffff;
 }
 
 .page {
     max-width: 1050px;
     margin: 20px auto;
-    background: white;
-    border: 1px solid #999999;
+    background: #111111;
+    border: 1px solid #ff6600;
     min-height: 90vh;
 }
 
@@ -42,12 +43,13 @@ body {
     background: #191919;
     color: white;
     padding: 40px;
-    border: 1px solid #444444;
+    border: 1px solid #ff6600;
     text-align: center;
 }
 
 .login-box h1 {
     margin: 0 0 10px;
+    color: #ff6600;
 }
 
 .login-box p {
@@ -60,13 +62,16 @@ body {
     margin-top: 18px;
     margin-bottom: 10px;
     font-size: 17px;
+    background: #222222;
+    color: white;
+    border: 1px solid #ff6600;
 }
 
 .login-button {
     width: 100%;
     padding: 14px;
-    background: white;
-    color: #111111;
+    background: #ff6600;
+    color: #000000;
     border: none;
     font-size: 17px;
     font-weight: bold;
@@ -74,7 +79,7 @@ body {
 }
 
 .login-button:hover {
-    background: #dddddd;
+    background: #ff8533;
 }
 
 .login-note {
@@ -90,45 +95,58 @@ body {
 
 .top {
     text-align: center;
-    border-bottom: 1px solid #777777;
+    border-bottom: 1px solid #ff6600;
 }
 
 .title {
     font-size: 28px;
     font-weight: bold;
     padding: 22px;
+    background: #000000;
+    color: #ff6600;
 }
 
 .navigation {
-    border-top: 1px solid #777777;
+    border-top: 1px solid #ff6600;
     padding: 10px;
 }
 
 .navigation button {
     margin: 0 5px;
     padding: 9px 15px;
-    background: white;
-    border: 1px solid #777777;
+    background: #000000;
+    color: #ff6600;
+    border: 1px solid #ff6600;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .navigation button:hover {
-    background: #eeeeee;
+    background: #ff6600;
+    color: #000000;
 }
 
 .player {
     text-align: center;
     font-size: 20px;
     padding: 15px;
-    border-bottom: 1px solid #777777;
+    border-bottom: 1px solid #ff6600;
+}
+
+.player strong {
+    color: #ff6600;
 }
 
 .main-stats {
     display: flex;
     justify-content: space-around;
     padding: 14px;
-    border-bottom: 1px solid #777777;
+    border-bottom: 1px solid #ff6600;
     font-weight: bold;
+}
+
+.main-stats strong {
+    color: #ff6600;
 }
 
 .dashboard {
@@ -139,7 +157,7 @@ body {
 .panel {
     padding: 20px;
     min-height: 350px;
-    border-right: 1px solid #777777;
+    border-right: 1px solid #ff6600;
 }
 
 .panel:last-child {
@@ -152,6 +170,7 @@ h2 {
     font-size: 18px;
     margin-top: 0;
     margin-bottom: 18px;
+    color: #ff6600;
 }
 
 ol {
@@ -161,6 +180,7 @@ ol {
 li {
     margin: 15px 0;
     font-weight: bold;
+    color: #ffffff;
 }
 
 .maps {
@@ -176,6 +196,7 @@ li {
 .map-name {
     font-weight: bold;
     margin: 10px;
+    color: #ffffff;
 }
 
 .map-image {
@@ -183,34 +204,34 @@ li {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #ffffff;
     font-weight: 900;
     font-size: 20px;
     text-shadow: 0 2px 4px #000000;
-    border: 1px solid #555555;
+    border: 1px solid #ff6600;
 }
 
-.rust {
+.map-one {
     background: linear-gradient(
         135deg,
-        #70452b,
-        #c79a65,
-        #30221b
+        #ff6600,
+        #662600,
+        #111111
     );
 }
 
-.city {
+.map-two {
     background: linear-gradient(
         135deg,
-        #253a52,
-        #8495a6,
-        #29262b
+        #111111,
+        #ff6600,
+        #662600
     );
 }
 
 .description {
     text-align: center;
-    border-top: 1px solid #777777;
+    border-top: 1px solid #ff6600;
     padding: 30px;
     line-height: 1.5;
 }
@@ -229,7 +250,7 @@ li {
 
     .panel {
         border-right: none;
-        border-bottom: 1px solid #777777;
+        border-bottom: 1px solid #ff6600;
     }
 
     .main-stats {
@@ -394,7 +415,7 @@ li {
 
                     <div
                         id="mostPlayedMapImage"
-                        class="map-image rust"
+                        class="map-image map-one"
                     ></div>
 
                 </article>
@@ -413,7 +434,7 @@ li {
 
                     <div
                         id="leastPlayedMapImage"
-                        class="map-image city"
+                        class="map-image map-two"
                     ></div>
 
                 </article>
@@ -447,20 +468,37 @@ li {
 
 <script>
 
-const mostUsedNames = [
+const scorestreakNames = [
     "UAV",
     "Hunter Killer",
     "K9 Unit",
     "Counter UAV",
-    "VTOL Warship"
-];
-
-const leastUsedNames = [
-    "HKDs",
-    "Rhino",
-    "D.A.W.G",
-    "Watchdog Helo",
-    "Gravemaker"
+    "VTOL Warship",
+    "Helicopter",
+    "Gunship",
+    "Attack Chopper",
+    "Chopper Gunner",
+    "AC-130",
+    "Stealth Chopper",
+    "Advanced UAV",
+    "Drone",
+    "EMP",
+    "Airstrike",
+    "Cluster Strike",
+    "Napalm Strike",
+    "Precision Airstrike",
+    "Sentry Gun",
+    "SAM Turret",
+    "RC-XD",
+    "Care Package",
+    "Guardian",
+    "Hellstorm",
+    "Lightning Strike",
+    "HARP",
+    "Orbital VSAT",
+    "Recon Drone",
+    "Counter Drone",
+    "Spy Plane"
 ];
 
 const maps = [
@@ -486,6 +524,35 @@ function randomNumber(min, max) {
 
 }
 
+function shuffleArray(array) {
+
+    const shuffled = [...array];
+
+    for (
+        let i = shuffled.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            shuffled[i],
+            shuffled[j]
+        ] = [
+            shuffled[j],
+            shuffled[i]
+        ];
+
+    }
+
+    return shuffled;
+
+}
+
 function createScorestreakList(
     elementID,
     names,
@@ -498,25 +565,19 @@ function createScorestreakList(
 
     list.innerHTML = "";
 
-    names.forEach(function(name, index) {
+    const selected =
+        shuffleArray(names).slice(0, 5);
+
+    selected.forEach(function(name) {
 
         const listItem =
             document.createElement("li");
 
-        const low =
-            Math.max(
-                1,
-                minimum - index * 3
-            );
-
-        const high =
-            Math.max(
-                low + 1,
-                maximum - index * 8
-            );
-
         const number =
-            randomNumber(low, high);
+            randomNumber(
+                minimum,
+                maximum
+            );
 
         listItem.textContent =
             name + " (" + number + ")";
@@ -578,59 +639,56 @@ function generateStats() {
     document
         .getElementById("highestStreak")
         .textContent =
-            randomNumber(10, 50);
+            randomNumber(
+                10,
+                50
+            );
+
+    const shuffledScorestreaks =
+        shuffleArray(scorestreakNames);
+
+    const mostUsedScorestreaks =
+        shuffledScorestreaks.slice(0, 5);
+
+    const leastUsedScorestreaks =
+        shuffledScorestreaks.slice(5, 10);
 
     createScorestreakList(
         "mostUsedScorestreaks",
-        mostUsedNames,
+        mostUsedScorestreaks,
         50,
         250
     );
 
     createScorestreakList(
         "leastUsedScorestreaks",
-        leastUsedNames,
+        leastUsedScorestreaks,
         1,
         25
     );
 
-    let mostMapIndex =
-        randomNumber(
-            0,
-            maps.length - 1
-        );
+    const shuffledMaps =
+        shuffleArray(maps);
 
-    let leastMapIndex =
-        randomNumber(
-            0,
-            maps.length - 1
-        );
+    const mostPlayedMap =
+        shuffledMaps[0];
 
-    while (
-        leastMapIndex === mostMapIndex
-    ) {
-
-        leastMapIndex =
-            randomNumber(
-                0,
-                maps.length - 1
-            );
-
-    }
+    const leastPlayedMap =
+        shuffledMaps[1];
 
     document
         .getElementById(
             "mostPlayedMapName"
         )
         .textContent =
-            maps[mostMapIndex];
+            mostPlayedMap;
 
     document
         .getElementById(
             "mostPlayedMapImage"
         )
         .textContent =
-            maps[mostMapIndex]
+            mostPlayedMap
             .toUpperCase();
 
     document
@@ -638,14 +696,14 @@ function generateStats() {
             "leastPlayedMapName"
         )
         .textContent =
-            maps[leastMapIndex];
+            leastPlayedMap;
 
     document
         .getElementById(
             "leastPlayedMapImage"
         )
         .textContent =
-            maps[leastMapIndex]
+            leastPlayedMap
             .toUpperCase();
 
 }
@@ -689,7 +747,8 @@ document
                 username
             );
 
-            window.location.hash = "stats";
+            window.location.hash =
+                "stats";
 
             generateStats();
 
@@ -717,34 +776,13 @@ document
                 "codTrackerUsername"
             );
 
-            window.location.hash = "login";
+            window.location.hash =
+                "login";
 
             showLogin();
 
         }
     );
-
-window.addEventListener(
-    "hashchange",
-    function() {
-
-        if (
-            window.location.hash === "#stats" &&
-            localStorage.getItem(
-                "codTrackerUsername"
-            )
-        ) {
-
-            generateStats();
-
-        } else {
-
-            showLogin();
-
-        }
-
-    }
-);
 
 if (
     window.location.hash === "#stats" &&
