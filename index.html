@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -204,14 +203,6 @@ li {
     background: #222222;
 }
 
-.map-image.map-error {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ff6600;
-    font-weight: bold;
-}
-
 .description {
     text-align: center;
     border-top: 1px solid #ff6600;
@@ -274,9 +265,9 @@ li {
         >
 
         <button
-            id="viewStatsButton"
             class="login-button"
             type="button"
+            onclick="viewStats()"
         >
             VIEW MY STATS
         </button>
@@ -301,15 +292,15 @@ li {
         <nav class="navigation">
 
             <button
-                id="newStatsButton"
                 type="button"
+                onclick="generateStats()"
             >
                 GENERATE NEW STATS
             </button>
 
             <button
-                id="logoutButton"
                 type="button"
+                onclick="logout()"
             >
                 LOG OUT
             </button>
@@ -541,12 +532,13 @@ function randomNumber(min, max) {
 
 }
 
+
 function shuffle(array) {
 
-    const shuffled = [...array];
+    const result = [...array];
 
     for (
-        let i = shuffled.length - 1;
+        let i = result.length - 1;
         i > 0;
         i--
     ) {
@@ -556,52 +548,20 @@ function shuffle(array) {
                 Math.random() * (i + 1)
             );
 
-        const temp =
-            shuffled[i];
+        const temp = result[i];
 
-        shuffled[i] =
-            shuffled[j];
+        result[i] = result[j];
 
-        shuffled[j] =
-            temp;
+        result[j] = temp;
 
     }
 
-    return shuffled;
+    return result;
 
 }
 
-function showMapImage(imageElement, map) {
 
-    imageElement.classList.remove("map-error");
-
-    imageElement.src = map.image;
-
-    imageElement.alt =
-        map.name + " map";
-
-    imageElement.onerror =
-        function() {
-
-            imageElement.removeAttribute("src");
-
-            imageElement.classList.add(
-                "map-error"
-            );
-
-            imageElement.alt =
-                map.name + " map image unavailable";
-
-            imageElement.setAttribute(
-                "aria-label",
-                map.name + " map image unavailable"
-            );
-
-        };
-
-}
-
-function generateStats() {
+function viewStats() {
 
     const username =
         document
@@ -611,9 +571,34 @@ function generateStats() {
 
     if (username === "") {
 
+        alert("Please enter a Call of Duty username.");
+
         return;
 
     }
+
+    document
+        .getElementById("loginPage")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("statsPage")
+        .classList
+        .remove("hidden");
+
+    generateStats();
+
+}
+
+
+function generateStats() {
+
+    const username =
+        document
+            .getElementById("username")
+            .value
+            .trim();
 
     document
         .getElementById("playerName")
@@ -646,6 +631,7 @@ function generateStats() {
                 50
             );
 
+
     const shuffledScorestreaks =
         shuffle(scorestreaks);
 
@@ -655,15 +641,18 @@ function generateStats() {
     const leastUsed =
         shuffledScorestreaks.slice(5, 10);
 
+
     const mostList =
         document.getElementById("mostUsed");
 
     const leastList =
         document.getElementById("leastUsed");
 
+
     mostList.innerHTML = "";
 
     leastList.innerHTML = "";
+
 
     mostUsed.forEach(function(name) {
 
@@ -680,6 +669,7 @@ function generateStats() {
 
     });
 
+
     leastUsed.forEach(function(name) {
 
         const item =
@@ -695,6 +685,7 @@ function generateStats() {
 
     });
 
+
     const shuffledMaps =
         shuffle(maps);
 
@@ -703,6 +694,7 @@ function generateStats() {
 
     const leastPlayedMap =
         shuffledMaps[1];
+
 
     document
         .getElementById("mostMap")
@@ -714,91 +706,49 @@ function generateStats() {
         .textContent =
             leastPlayedMap.name;
 
-    showMapImage(
-        document.getElementById("mostMapImage"),
-        mostPlayedMap
-    );
 
-    showMapImage(
-        document.getElementById("leastMapImage"),
-        leastPlayedMap
-    );
+    const mostImage =
+        document.getElementById("mostMapImage");
+
+    const leastImage =
+        document.getElementById("leastMapImage");
+
+
+    mostImage.src =
+        mostPlayedMap.image;
+
+    mostImage.alt =
+        mostPlayedMap.name +
+        " map";
+
+
+    leastImage.src =
+        leastPlayedMap.image;
+
+    leastImage.alt =
+        leastPlayedMap.name +
+        " map";
 
 }
 
 
-document
-    .getElementById("viewStatsButton")
-    .addEventListener(
-        "click",
-        function() {
+function logout() {
 
-            const username =
-                document
-                    .getElementById("username")
-                    .value
-                    .trim();
+    document
+        .getElementById("statsPage")
+        .classList
+        .add("hidden");
 
-            if (username === "") {
+    document
+        .getElementById("loginPage")
+        .classList
+        .remove("hidden");
 
-                document
-                    .getElementById("username")
-                    .focus();
+    document
+        .getElementById("username")
+        .value = "";
 
-                return;
-
-            }
-
-            document
-                .getElementById("loginPage")
-                .classList
-                .add("hidden");
-
-            document
-                .getElementById("statsPage")
-                .classList
-                .remove("hidden");
-
-            generateStats();
-
-        }
-    );
-
-
-document
-    .getElementById("newStatsButton")
-    .addEventListener(
-        "click",
-        function() {
-
-            generateStats();
-
-        }
-    );
-
-
-document
-    .getElementById("logoutButton")
-    .addEventListener(
-        "click",
-        function() {
-
-            document
-                .getElementById("statsPage")
-                .classList
-                .add("hidden");
-
-            document
-                .getElementById("loginPage")
-                .classList
-                .remove("hidden");
-
-            document
-                .getElementById("username")
-                .value = "";
-
-        }
-    );
+}
 
 </script>
 
