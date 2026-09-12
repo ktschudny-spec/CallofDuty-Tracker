@@ -12,12 +12,42 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     min-height: 100vh;
     background: #171313;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button:focus,
+input:focus {
+    outline: 3px solid #66b3ff;
+    outline-offset: 3px;
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 10px;
+    background: white;
+    color: black;
+    padding: 10px 15px;
+    z-index: 1000;
+}
+
+.skip-link:focus {
+    left: 10px;
 }
 
 .page {
@@ -34,12 +64,12 @@ body {
     width: 450px;
     padding: 55px 45px;
     border: 3px solid #ff8c00;
-    background: rgba(35, 25, 25, 0.85);
+    background: rgba(35, 25, 25, 0.88);
     text-align: center;
 }
 
 .login-box h1 {
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     color: #ff8c00;
     font-size: 30px;
 }
@@ -49,15 +79,21 @@ body {
     font-size: 16px;
 }
 
+.login-box label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
 .login-box input {
     width: 100%;
     height: 48px;
     padding: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     background: #392727;
     border: 2px solid #ff8c00;
     color: white;
-    font-size: 15px;
 }
 
 .login-box input::placeholder {
@@ -72,11 +108,18 @@ body {
     background: #ff9800;
     color: #111;
     font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
 }
 
 .login-box button:hover {
     background: #ffad32;
+}
+
+.error-message {
+    color: #ffb3b3;
+    margin: 0 0 12px;
+    font-weight: bold;
 }
 
 .hidden {
@@ -234,27 +277,63 @@ body {
         padding: 20px;
     }
 }
+
+@media (max-width: 500px) {
+    .page {
+        width: 94%;
+    }
+
+    .login-box {
+        width: 90%;
+        padding: 40px 25px;
+    }
+
+    .scorestreaks {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div id="loginPage" class="page">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<main id="main-content">
+
+<section id="loginPage" class="page" aria-labelledby="loginTitle">
 
     <div class="login-box">
 
-        <h1>Call of Duty Tracker</h1>
+        <h1 id="loginTitle">Call of Duty Tracker</h1>
 
         <h2>Sign Up / Login</h2>
+
+        <label for="username">Call of Duty username</label>
 
         <input
             id="username"
             type="text"
             placeholder="Enter Call of Duty username"
-            aria-label="Enter Call of Duty username"
+            autocomplete="username"
+            aria-describedby="loginError"
         >
 
+        <p
+            id="loginError"
+            class="error-message"
+            role="alert"
+            aria-live="assertive"
+        ></p>
+
         <button
+            id="loginButton"
             type="button"
             onclick="viewStats()"
         >
@@ -263,13 +342,23 @@ body {
 
     </div>
 
-</div>
+</section>
 
-<div id="statsPage" class="stats-container hidden">
+<section
+    id="statsPage"
+    class="stats-container hidden"
+    aria-labelledby="statsTitle"
+>
 
-    <h1 class="stats-title">Call of Duty Tracker</h1>
+    <h1 id="statsTitle" class="stats-title">
+        Call of Duty Tracker
+    </h1>
 
-    <div id="playerName" class="player-name"></div>
+    <div
+        id="playerName"
+        class="player-name"
+        aria-live="polite"
+    ></div>
 
     <div class="top-buttons">
 
@@ -291,80 +380,128 @@ body {
 
     </div>
 
-    <div class="main-stats">
+    <div
+        id="statsAnnouncement"
+        class="hidden"
+        aria-live="polite"
+    ></div>
+
+    <section
+        class="main-stats"
+        aria-label="Player statistics"
+    >
 
         <div class="stat-box">
-            <h3>Kills</h3>
-            <div id="kills" class="stat-number">0</div>
+            <h2>Kills</h2>
+            <div
+                id="kills"
+                class="stat-number"
+                aria-label="Kills"
+            >
+                0
+            </div>
         </div>
 
         <div class="stat-box">
-            <h3>Deaths</h3>
-            <div id="deaths" class="stat-number">0</div>
+            <h2>Deaths</h2>
+            <div
+                id="deaths"
+                class="stat-number"
+                aria-label="Deaths"
+            >
+                0
+            </div>
         </div>
 
         <div class="stat-box">
-            <h3>Highest Streak</h3>
-            <div id="streak" class="stat-number">0</div>
+            <h2>Highest Streak</h2>
+            <div
+                id="streak"
+                class="stat-number"
+                aria-label="Highest streak"
+            >
+                0
+            </div>
         </div>
 
-    </div>
+    </section>
 
-    <div class="scorestreak-section">
+    <section
+        class="scorestreak-section"
+        aria-labelledby="mostUsedTitle"
+    >
 
-        <h2>Most Used Scorestreaks</h2>
+        <h2 id="mostUsedTitle">Most Used Scorestreaks</h2>
 
-        <div id="mostUsed" class="scorestreaks"></div>
+        <div
+            id="mostUsed"
+            class="scorestreaks"
+            role="list"
+            aria-label="Most used scorestreaks"
+        ></div>
 
-    </div>
+    </section>
 
-    <div class="scorestreak-section">
+    <section
+        class="scorestreak-section"
+        aria-labelledby="leastUsedTitle"
+    >
 
-        <h2>Least Used Scorestreaks</h2>
+        <h2 id="leastUsedTitle">Least Used Scorestreaks</h2>
 
-        <div id="leastUsed" class="scorestreaks"></div>
+        <div
+            id="leastUsed"
+            class="scorestreaks"
+            role="list"
+            aria-label="Least used scorestreaks"
+        ></div>
 
-    </div>
+    </section>
 
-    <div class="maps-section">
+    <section
+        class="maps-section"
+        aria-labelledby="mapsTitle"
+    >
 
-        <h2>Maps</h2>
+        <h2 id="mapsTitle">Maps</h2>
 
         <div class="maps">
 
-            <div class="map-card">
+            <article class="map-card">
 
                 <img
                     id="mostPlayedImage"
                     src="images/rust.jpg"
-                    alt="Most played Call of Duty map"
+                    alt="Rust Call of Duty map"
                 >
 
                 <h3>Most Played Map</h3>
 
                 <p id="mostPlayed">Rust</p>
 
-            </div>
+            </article>
 
-            <div class="map-card">
+            <article class="map-card">
 
                 <img
                     id="leastPlayedImage"
                     src="images/piccadilly.jpg"
-                    alt="Least played Call of Duty map"
+                    alt="Piccadilly Call of Duty map"
                 >
 
                 <h3>Least Played Map</h3>
 
                 <p id="leastPlayed">Piccadilly</p>
 
-            </div>
+            </article>
 
         </div>
 
-    </div>
+    </section>
 
-</div>
+</section>
+
+</main>
 
 <script>
 const scorestreaks = [
@@ -431,43 +568,43 @@ function shuffle(array) {
 }
 
 function viewStats() {
+    const usernameInput = document.getElementById("username");
+    const username = usernameInput.value.trim();
+    const error = document.getElementById("loginError");
 
-    const username = document
-        .getElementById("username")
-        .value
-        .trim();
+    error.textContent = "";
 
     if (username === "") {
-        alert("Please enter a Call of Duty username.");
+        error.textContent = "Please enter a Call of Duty username.";
+        usernameInput.focus();
         return;
     }
 
     document.getElementById("playerName").textContent =
         "Player: " + username;
 
-    document
-        .getElementById("loginPage")
-        .classList
-        .add("hidden");
+    document.getElementById("loginPage").classList.add("hidden");
 
-    document
-        .getElementById("statsPage")
-        .classList
-        .remove("hidden");
+    document.getElementById("statsPage").classList.remove("hidden");
 
     generateStats();
+
+    document.getElementById("statsPage").focus();
 }
 
 function generateStats() {
+    const kills = randomNumber(1000, 25000);
+    const deaths = randomNumber(500, 15000);
+    const streak = randomNumber(5, 50);
 
     document.getElementById("kills").textContent =
-        randomNumber(1000, 25000).toLocaleString();
+        kills.toLocaleString();
 
     document.getElementById("deaths").textContent =
-        randomNumber(500, 15000).toLocaleString();
+        deaths.toLocaleString();
 
     document.getElementById("streak").textContent =
-        randomNumber(5, 50);
+        streak;
 
     const randomScorestreaks = shuffle(scorestreaks);
 
@@ -478,14 +615,18 @@ function generateStats() {
     document.getElementById("mostUsed").innerHTML =
         mostUsed
             .map(function(item) {
-                return '<div class="scorestreak">' + item + '</div>';
+                return '<div class="scorestreak" role="listitem">' +
+                    item +
+                    '</div>';
             })
             .join("");
 
     document.getElementById("leastUsed").innerHTML =
         leastUsed
             .map(function(item) {
-                return '<div class="scorestreak">' + item + '</div>';
+                return '<div class="scorestreak" role="listitem">' +
+                    item +
+                    '</div>';
             })
             .join("");
 
@@ -502,7 +643,7 @@ function generateStats() {
         mostPlayed[1];
 
     document.getElementById("mostPlayedImage").alt =
-        "Image of " + mostPlayed[0];
+        "Image of " + mostPlayed[0] + " Call of Duty map";
 
     document.getElementById("leastPlayed").textContent =
         leastPlayed[0];
@@ -511,23 +652,32 @@ function generateStats() {
         leastPlayed[1];
 
     document.getElementById("leastPlayedImage").alt =
-        "Image of " + leastPlayed[0];
+        "Image of " + leastPlayed[0] + " Call of Duty map";
+
+    document.getElementById("statsAnnouncement").textContent =
+        "New player statistics have been generated.";
 }
 
 function logout() {
+    document.getElementById("statsPage").classList.add("hidden");
 
-    document
-        .getElementById("statsPage")
-        .classList
-        .add("hidden");
-
-    document
-        .getElementById("loginPage")
-        .classList
-        .remove("hidden");
+    document.getElementById("loginPage").classList.remove("hidden");
 
     document.getElementById("username").value = "";
+
+    document.getElementById("loginError").textContent = "";
+
+    document.getElementById("username").focus();
 }
+
+document.getElementById("username").addEventListener(
+    "keydown",
+    function(event) {
+        if (event.key === "Enter") {
+            viewStats();
+        }
+    }
+);
 </script>
 
 </body>
