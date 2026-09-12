@@ -518,25 +518,21 @@ function createScorestreakList(
 
     list.innerHTML = "";
 
-    names.forEach(function(name, index) {
+    const shuffled = 
+        [...names].sort(
+            () => Math.random() - 0.5 
+                ); 
+    const selected = 
+        shuffled.slice(0,5); {
 
         const listItem =
             document.createElement("li");
 
-        const low =
-            Math.max(
-                1,
-                minimum - index * 3
-            );
-
-        const high =
-            Math.max(
-                low + 1,
-                maximum - index * 8
-            );
-
         const number =
-            randomNumber(low, high);
+            randomNumber(
+                minimum,maximum
+            
+            );
 
         listItem.textContent =
             name + " (" + number + ")";
