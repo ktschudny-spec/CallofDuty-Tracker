@@ -1,12 +1,12 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Call of Duty Tracker</title>
@@ -90,7 +90,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .top {
@@ -167,6 +167,7 @@ h2 {
     text-align: center;
     color: #ff6600;
     text-decoration: underline;
+    font-size: 18px;
 }
 
 ol {
@@ -201,6 +202,14 @@ li {
     object-fit: cover;
     border: 1px solid #ff6600;
     background: #222222;
+}
+
+.map-image.map-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff6600;
+    font-weight: bold;
 }
 
 .description {
@@ -385,8 +394,8 @@ li {
                     <img
                         id="mostMapImage"
                         class="map-image"
-                        src="images/rust.jpg"
-                        alt="Rust map"
+                        src=""
+                        alt=""
                     >
 
                 </article>
@@ -406,8 +415,8 @@ li {
                     <img
                         id="leastMapImage"
                         class="map-image"
-                        src="images/nuketown.jpg"
-                        alt="Nuketown map"
+                        src=""
+                        alt=""
                     >
 
                 </article>
@@ -547,17 +556,48 @@ function shuffle(array) {
                 Math.random() * (i + 1)
             );
 
-        [
-            shuffled[i],
-            shuffled[j]
-        ] = [
-            shuffled[j],
-            shuffled[i]
-        ];
+        const temp =
+            shuffled[i];
+
+        shuffled[i] =
+            shuffled[j];
+
+        shuffled[j] =
+            temp;
 
     }
 
     return shuffled;
+
+}
+
+function showMapImage(imageElement, map) {
+
+    imageElement.classList.remove("map-error");
+
+    imageElement.src = map.image;
+
+    imageElement.alt =
+        map.name + " map";
+
+    imageElement.onerror =
+        function() {
+
+            imageElement.removeAttribute("src");
+
+            imageElement.classList.add(
+                "map-error"
+            );
+
+            imageElement.alt =
+                map.name + " map image unavailable";
+
+            imageElement.setAttribute(
+                "aria-label",
+                map.name + " map image unavailable"
+            );
+
+        };
 
 }
 
@@ -568,6 +608,12 @@ function generateStats() {
             .getElementById("username")
             .value
             .trim();
+
+    if (username === "") {
+
+        return;
+
+    }
 
     document
         .getElementById("playerName")
@@ -668,27 +714,15 @@ function generateStats() {
         .textContent =
             leastPlayedMap.name;
 
-    document
-        .getElementById("mostMapImage")
-        .src =
-            mostPlayedMap.image;
+    showMapImage(
+        document.getElementById("mostMapImage"),
+        mostPlayedMap
+    );
 
-    document
-        .getElementById("leastMapImage")
-        .src =
-            leastPlayedMap.image;
-
-    document
-        .getElementById("mostMapImage")
-        .alt =
-            mostPlayedMap.name +
-            " map";
-
-    document
-        .getElementById("leastMapImage")
-        .alt =
-            leastPlayedMap.name +
-            " map";
+    showMapImage(
+        document.getElementById("leastMapImage"),
+        leastPlayedMap
+    );
 
 }
 
