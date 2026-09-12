@@ -1,13 +1,12 @@
 
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Call of Duty Tracker</title>
@@ -22,7 +21,7 @@ body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     background: #000000;
-    color: white;
+    color: #ffffff;
 }
 
 .page {
@@ -64,7 +63,7 @@ body {
     margin: 18px 0 10px;
     font-size: 17px;
     background: #000000;
-    color: white;
+    color: #ffffff;
     border: 1px solid #ff6600;
 }
 
@@ -81,6 +80,13 @@ body {
 
 .login-button:hover {
     background: #ff8533;
+}
+
+.login-note {
+    display: block;
+    margin-top: 18px;
+    font-size: 12px;
+    color: #888888;
 }
 
 .hidden {
@@ -163,6 +169,10 @@ h2 {
     text-decoration: underline;
 }
 
+ol {
+    padding-left: 30px;
+}
+
 li {
     margin: 15px 0;
     font-weight: bold;
@@ -181,21 +191,16 @@ li {
 .map-name {
     margin: 10px;
     font-weight: bold;
+    color: #ffffff;
 }
 
 .map-image {
+    width: 100%;
     height: 145px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    object-fit: cover;
     border: 1px solid #ff6600;
-    background: linear-gradient(
-        135deg,
-        #ff6600,
-        #662600,
-        #000000
-    );
-    font-weight: bold;
+    background: #222222;
 }
 
 .description {
@@ -203,6 +208,12 @@ li {
     border-top: 1px solid #ff6600;
     padding: 30px;
     line-height: 1.5;
+}
+
+.demo {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #777777;
 }
 
 @media (max-width: 750px) {
@@ -242,10 +253,15 @@ li {
 
         <p>Sign Up / Login</p>
 
+        <label for="username" class="hidden">
+            Call of Duty Username
+        </label>
+
         <input
             id="username"
             type="text"
             placeholder="Enter Call of Duty username"
+            maxlength="30"
         >
 
         <button
@@ -255,6 +271,10 @@ li {
         >
             VIEW MY STATS
         </button>
+
+        <span class="login-note">
+            Demo website — stats are randomly generated.
+        </span>
 
     </div>
 
@@ -269,7 +289,7 @@ li {
             Call of Duty Tracker
         </div>
 
-        <div class="navigation">
+        <nav class="navigation">
 
             <button
                 id="newStatsButton"
@@ -285,7 +305,7 @@ li {
                 LOG OUT
             </button>
 
-        </div>
+        </nav>
 
     </header>
 
@@ -298,7 +318,10 @@ li {
     </div>
 
 
-    <div class="main-stats">
+    <section
+        class="main-stats"
+        aria-label="Player statistics"
+    >
 
         <span>
             Kills:
@@ -315,7 +338,7 @@ li {
             <strong id="highestStreak"></strong>
         </span>
 
-    </div>
+    </section>
 
 
     <main class="dashboard">
@@ -348,7 +371,7 @@ li {
 
             <div class="maps">
 
-                <div class="map">
+                <article class="map">
 
                     <h2>
                         Most Played Map
@@ -359,14 +382,17 @@ li {
                         class="map-name"
                     ></div>
 
-                    <div class="map-image">
-                        MAP
-                    </div>
+                    <img
+                        id="mostMapImage"
+                        class="map-image"
+                        src="images/rust.jpg"
+                        alt="Rust map"
+                    >
 
-                </div>
+                </article>
 
 
-                <div class="map">
+                <article class="map">
 
                     <h2>
                         Least Played Map
@@ -377,11 +403,14 @@ li {
                         class="map-name"
                     ></div>
 
-                    <div class="map-image">
-                        MAP
-                    </div>
+                    <img
+                        id="leastMapImage"
+                        class="map-image"
+                        src="images/nuketown.jpg"
+                        alt="Nuketown map"
+                    >
 
-                </div>
+                </article>
 
             </div>
 
@@ -390,14 +419,22 @@ li {
     </main>
 
 
-    <div class="description">
+    <footer class="description">
 
         We collect player data then put it into our tracker,
         so when you are taking a break from the battlefield
         you can step back and look at all of your achievements
         you have made!
 
-    </div>
+        <div class="demo">
+
+            Demo version: these stats are randomly generated
+            and are not connected to Activision or Call of Duty
+            servers.
+
+        </div>
+
+    </footer>
 
 </div>
 
@@ -440,64 +477,137 @@ const maps = [
     {
         name: "Rust",
         image: "images/rust.jpg"
-    }, 
-    { 
+    },
+    {
         name: "Nuketown",
         image: "images/nuketown.jpg"
-    }, 
-    { 
-    
-    "Shipment",
-    "Terminal",
-    "Raid",
-    "Highrise",
-    "Firing Range",
-    "Crash",
-    "Shoot House",
-    "Standoff",
-    "Piccadilly",
-    "Vacant"
+    },
+    {
+        name: "Shipment",
+        image: "images/shipment.jpg"
+    },
+    {
+        name: "Terminal",
+        image: "images/terminal.jpg"
+    },
+    {
+        name: "Raid",
+        image: "images/raid.jpg"
+    },
+    {
+        name: "Highrise",
+        image: "images/highrise.jpg"
+    },
+    {
+        name: "Firing Range",
+        image: "images/firing-range.jpg"
+    },
+    {
+        name: "Crash",
+        image: "images/crash.jpg"
+    },
+    {
+        name: "Shoot House",
+        image: "images/shoot-house.jpg"
+    },
+    {
+        name: "Standoff",
+        image: "images/standoff.jpg"
+    },
+    {
+        name: "Piccadilly",
+        image: "images/piccadilly.jpg"
+    },
+    {
+        name: "Vacant",
+        image: "images/vacant.jpg"
+    }
 ];
 
 function randomNumber(min, max) {
+
     return Math.floor(
         Math.random() * (max - min + 1)
     ) + min;
+
 }
 
 function shuffle(array) {
 
-    return [...array].sort(
-        () => Math.random() - 0.5
-    );
+    const shuffled = [...array];
+
+    for (
+        let i = shuffled.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            shuffled[i],
+            shuffled[j]
+        ] = [
+            shuffled[j],
+            shuffled[i]
+        ];
+
+    }
+
+    return shuffled;
 
 }
 
 function generateStats() {
 
     const username =
-        document.getElementById("username").value.trim();
+        document
+            .getElementById("username")
+            .value
+            .trim();
 
-    document.getElementById("playerName").textContent =
-        username + " #" + randomNumber(100, 999);
+    document
+        .getElementById("playerName")
+        .textContent =
+            username +
+            " #" +
+            randomNumber(100, 999);
 
-    document.getElementById("kills").textContent =
-        randomNumber(10000, 99999).toLocaleString();
+    document
+        .getElementById("kills")
+        .textContent =
+            randomNumber(
+                10000,
+                99999
+            ).toLocaleString();
 
-    document.getElementById("deaths").textContent =
-        randomNumber(5000, 50000).toLocaleString();
+    document
+        .getElementById("deaths")
+        .textContent =
+            randomNumber(
+                5000,
+                50000
+            ).toLocaleString();
 
-    document.getElementById("highestStreak").textContent =
-        randomNumber(10, 50);
+    document
+        .getElementById("highestStreak")
+        .textContent =
+            randomNumber(
+                10,
+                50
+            );
 
-    const shuffled =
+    const shuffledScorestreaks =
         shuffle(scorestreaks);
 
-    const most =
-        shuffled.slice(0, 5);
+    const mostUsed =
+        shuffledScorestreaks.slice(0, 5);
 
-    const least =
-        shuffled.slice(5, 10);
+    const leastUsed =
+        shuffledScorestreaks.slice(5, 10);
 
     const mostList =
         document.getElementById("mostUsed");
@@ -506,15 +616,17 @@ function generateStats() {
         document.getElementById("leastUsed");
 
     mostList.innerHTML = "";
+
     leastList.innerHTML = "";
 
-    most.forEach(function(name) {
+    mostUsed.forEach(function(name) {
 
         const item =
             document.createElement("li");
 
         item.textContent =
-            name + " (" +
+            name +
+            " (" +
             randomNumber(50, 250) +
             ")";
 
@@ -522,13 +634,14 @@ function generateStats() {
 
     });
 
-    least.forEach(function(name) {
+    leastUsed.forEach(function(name) {
 
         const item =
             document.createElement("li");
 
         item.textContent =
-            name + " (" +
+            name +
+            " (" +
             randomNumber(1, 25) +
             ")";
 
@@ -539,73 +652,119 @@ function generateStats() {
     const shuffledMaps =
         shuffle(maps);
 
-    document.getElementById("mostMap").textContent =
+    const mostPlayedMap =
         shuffledMaps[0];
 
-    document.getElementById("leastMap").textContent =
+    const leastPlayedMap =
         shuffledMaps[1];
+
+    document
+        .getElementById("mostMap")
+        .textContent =
+            mostPlayedMap.name;
+
+    document
+        .getElementById("leastMap")
+        .textContent =
+            leastPlayedMap.name;
+
+    document
+        .getElementById("mostMapImage")
+        .src =
+            mostPlayedMap.image;
+
+    document
+        .getElementById("leastMapImage")
+        .src =
+            leastPlayedMap.image;
+
+    document
+        .getElementById("mostMapImage")
+        .alt =
+            mostPlayedMap.name +
+            " map";
+
+    document
+        .getElementById("leastMapImage")
+        .alt =
+            leastPlayedMap.name +
+            " map";
 
 }
 
 
 document
     .getElementById("viewStatsButton")
-    .addEventListener("click", function() {
+    .addEventListener(
+        "click",
+        function() {
 
-        const username =
-            document.getElementById("username").value.trim();
+            const username =
+                document
+                    .getElementById("username")
+                    .value
+                    .trim();
 
-        if (username === "") {
+            if (username === "") {
 
-            document.getElementById("username").focus();
+                document
+                    .getElementById("username")
+                    .focus();
 
-            return;
+                return;
+
+            }
+
+            document
+                .getElementById("loginPage")
+                .classList
+                .add("hidden");
+
+            document
+                .getElementById("statsPage")
+                .classList
+                .remove("hidden");
+
+            generateStats();
 
         }
-
-        document
-            .getElementById("loginPage")
-            .classList
-            .add("hidden");
-
-        document
-            .getElementById("statsPage")
-            .classList
-            .remove("hidden");
-
-        generateStats();
-
-    });
+    );
 
 
 document
     .getElementById("newStatsButton")
-    .addEventListener("click", function() {
+    .addEventListener(
+        "click",
+        function() {
 
-        generateStats();
+            generateStats();
 
-    });
+        }
+    );
 
 
 document
     .getElementById("logoutButton")
-    .addEventListener("click", function() {
+    .addEventListener(
+        "click",
+        function() {
 
-        document
-            .getElementById("statsPage")
-            .classList
-            .add("hidden");
+            document
+                .getElementById("statsPage")
+                .classList
+                .add("hidden");
 
-        document
-            .getElementById("loginPage")
-            .classList
-            .remove("hidden");
+            document
+                .getElementById("loginPage")
+                .classList
+                .remove("hidden");
 
-        document
-            .getElementById("username")
-            .value = "";
+            document
+                .getElementById("username")
+                .value = "";
 
-    });
+        }
+    );
 
 </script>
 
