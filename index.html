@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,9 +30,14 @@ input {
 }
 
 button:focus,
-input:focus {
+input:focus,
+a:focus {
     outline: 3px solid #66b3ff;
     outline-offset: 3px;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .skip-link {
@@ -122,10 +126,6 @@ input:focus {
     font-weight: bold;
 }
 
-.hidden {
-    display: none !important;
-}
-
 .stats-container {
     width: 92%;
     min-height: 88vh;
@@ -144,7 +144,7 @@ input:focus {
 .player-name {
     text-align: center;
     font-size: 18px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .top-buttons {
@@ -167,6 +167,11 @@ input:focus {
 
 .logout {
     background: #333;
+    color: white;
+}
+
+.info-button {
+    background: #4b4b4b;
     color: white;
 }
 
@@ -194,14 +199,16 @@ input:focus {
     font-weight: bold;
 }
 
-.scorestreak-section {
+.scorestreak-section,
+.maps-section {
     border: 2px solid #ff8c00;
     background: #241a1a;
     padding: 25px;
     margin-bottom: 25px;
 }
 
-.scorestreak-section h2 {
+.scorestreak-section h2,
+.maps-section h2 {
     color: #ff8c00;
     text-align: center;
     margin-top: 0;
@@ -217,17 +224,6 @@ input:focus {
     padding: 15px 8px;
     background: #352626;
     border: 1px solid #555;
-    text-align: center;
-}
-
-.maps-section {
-    border: 2px solid #ff8c00;
-    background: #241a1a;
-    padding: 25px;
-}
-
-.maps-section h2 {
-    color: #ff8c00;
     text-align: center;
 }
 
@@ -257,17 +253,73 @@ input:focus {
 }
 
 .map-card p {
-    margin: 0;
+    margin: 0 15px;
 }
 
-.image-error {
-    min-height: 220px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.info-page {
+    display: block;
+    width: 92%;
+    min-height: 88vh;
+    margin: 6vh auto;
+    border: 3px solid #ff8c00;
+    padding: 35px;
+}
+
+.info-page h1 {
+    color: #ff8c00;
+    text-align: center;
+    margin-top: 0;
+}
+
+.info-card {
     background: #241a1a;
-    color: #aaa;
-    padding: 20px;
+    border: 2px solid #ff8c00;
+    padding: 22px;
+    margin: 18px 0;
+}
+
+.info-card h2 {
+    color: #ff9800;
+    margin-top: 0;
+}
+
+.back-button {
+    display: block;
+    margin: 0 auto 25px;
+    padding: 12px 22px;
+    border: none;
+    background: #ff9800;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.map-guide-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.map-guide-card {
+    background: #352626;
+    border: 1px solid #555;
+    overflow: hidden;
+}
+
+.map-guide-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.map-guide-card div {
+    padding: 15px;
+}
+
+.map-guide-card h3 {
+    color: #ff9800;
+    margin-top: 0;
 }
 
 @media (max-width: 800px) {
@@ -279,11 +331,13 @@ input:focus {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .maps {
+    .maps,
+    .map-guide-grid {
         grid-template-columns: 1fr;
     }
 
-    .stats-container {
+    .stats-container,
+    .info-page {
         padding: 20px;
     }
 }
@@ -300,12 +354,6 @@ input:focus {
 
     .scorestreaks {
         grid-template-columns: 1fr;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
     }
 }
 </style>
@@ -352,14 +400,13 @@ input:focus {
 
         <button
             id="loginButton"
-            class="login-button"
             type="button"
             onclick="viewStats()"
         >
             VIEW MY STATS
         </button>
 
-        <p class="demo">
+        <p>
             Demo website - Stats are randomly generated.
         </p>
 
@@ -403,6 +450,30 @@ input:focus {
             </button>
 
             <button
+                class="info-button"
+                type="button"
+                onclick="showPage('statsGuidePage')"
+            >
+                STATS GUIDE
+            </button>
+
+            <button
+                class="info-button"
+                type="button"
+                onclick="showPage('scorestreakGuidePage')"
+            >
+                SCORESTREAK GUIDE
+            </button>
+
+            <button
+                class="info-button"
+                type="button"
+                onclick="showPage('mapsGuidePage')"
+            >
+                MAP GUIDE
+            </button>
+
+            <button
                 id="logoutButton"
                 class="logout"
                 type="button"
@@ -413,94 +484,87 @@ input:focus {
 
         </div>
 
-        <div
-            id="statsAnnouncement"
-            class="hidden"
-            aria-live="polite"
-        ></div>
-
         <section
             class="main-stats"
             aria-label="Player statistics"
         >
 
             <div class="stat-box">
-                <h2>Kills</h2>
+
+                <h2>
+                    Kills
+                </h2>
+
                 <div
                     id="kills"
                     class="stat-number"
-                    aria-label="Number of kills"
                 >
                     0
                 </div>
+
             </div>
 
             <div class="stat-box">
-                <h2>Deaths</h2>
+
+                <h2>
+                    Deaths
+                </h2>
+
                 <div
                     id="deaths"
                     class="stat-number"
-                    aria-label="Number of deaths"
                 >
                     0
                 </div>
+
             </div>
 
             <div class="stat-box">
-                <h2>Highest Streak</h2>
+
+                <h2>
+                    Highest Streak
+                </h2>
+
                 <div
                     id="streak"
                     class="stat-number"
-                    aria-label="Highest kill streak"
                 >
                     0
                 </div>
+
             </div>
 
         </section>
 
-        <section
-            class="scorestreak-section"
-            aria-labelledby="mostUsedTitle"
-        >
+        <section class="scorestreak-section">
 
-            <h2 id="mostUsedTitle">
+            <h2>
                 Most Used Scorestreaks
             </h2>
 
             <div
                 id="mostUsed"
                 class="scorestreaks"
-                role="list"
-                aria-label="Most used scorestreaks"
             ></div>
 
         </section>
 
-        <section
-            class="scorestreak-section"
-            aria-labelledby="leastUsedTitle"
-        >
+        <section class="scorestreak-section">
 
-            <h2 id="leastUsedTitle">
+            <h2>
                 Least Used Scorestreaks
             </h2>
 
             <div
                 id="leastUsed"
                 class="scorestreaks"
-                role="list"
-                aria-label="Least used scorestreaks"
             ></div>
 
         </section>
 
-        <section
-            class="maps-section"
-            aria-labelledby="mapsTitle"
-        >
+        <section class="maps-section">
 
-            <h2 id="mapsTitle">
+            <h2>
                 Maps
             </h2>
 
@@ -511,7 +575,7 @@ input:focus {
                     <img
                         id="mostPlayedImage"
                         src=""
-                        alt="Rust Call of Duty map"
+                        alt=""
                     >
 
                     <h3>
@@ -529,7 +593,7 @@ input:focus {
                     <img
                         id="leastPlayedImage"
                         src=""
-                        alt="Piccadilly Call of Duty map"
+                        alt=""
                     >
 
                     <h3>
@@ -550,9 +614,199 @@ input:focus {
 
 </section>
 
+<section
+    id="statsGuidePage"
+    class="info-page hidden"
+>
+
+    <h1>
+        Call of Duty Stats Guide
+    </h1>
+
+    <button
+        class="back-button"
+        onclick="showPage('statsPage')"
+    >
+        ← BACK TO MY STATS
+    </button>
+
+    <article class="info-card">
+
+        <h2>
+            Kills
+        </h2>
+
+        <p>
+            A kill is counted when you eliminate an opposing player.
+            Your total kills show how many enemy players you have
+            eliminated during the games represented by your statistics.
+        </p>
+
+        <p>
+            A higher kill total means you have eliminated more opponents,
+            but kills are only one part of understanding a player's performance.
+        </p>
+
+    </article>
+
+    <article class="info-card">
+
+        <h2>
+            Deaths
+        </h2>
+
+        <p>
+            A death is counted when your character is eliminated by
+            an opposing player or another source of damage.
+        </p>
+
+        <p>
+            Comparing kills and deaths can help you understand how often
+            you eliminate opponents compared with how often you are eliminated.
+        </p>
+
+    </article>
+
+    <article class="info-card">
+
+        <h2>
+            Highest Streak
+        </h2>
+
+        <p>
+            Your highest streak is the largest number of consecutive
+            kills you achieved without dying.
+        </p>
+
+        <p>
+            For example, a highest streak of 12 means you eliminated
+            12 opponents in a row before your streak ended.
+        </p>
+
+    </article>
+
+    <article class="info-card">
+
+        <h2>
+            How the Stats Work
+        </h2>
+
+        <p>
+            This website is a demonstration tracker.
+            The statistics are randomly generated whenever you choose
+            GENERATE NEW STATS.
+        </p>
+
+        <p>
+            The statistics are not connected to an actual Call of Duty account.
+        </p>
+
+    </article>
+
+</section>
+
+<section
+    id="scorestreakGuidePage"
+    class="info-page hidden"
+>
+
+    <h1>
+        Scorestreak Guide
+    </h1>
+
+    <button
+        class="back-button"
+        onclick="showPage('statsPage')"
+    >
+        ← BACK TO MY STATS
+    </button>
+
+    <article class="info-card">
+
+        <h2>
+            What Is a Scorestreak?
+        </h2>
+
+        <p>
+            A scorestreak is a reward earned by building score during
+            a match.
+        </p>
+
+        <p>
+            Depending on the Call of Duty game and mode, score can come
+            from eliminations, objectives, assists, and other actions.
+        </p>
+
+    </article>
+
+    <article class="info-card">
+
+        <h2>
+            Scorestreaks in This Tracker
+        </h2>
+
+        <p>
+            The tracker randomly selects scorestreaks from the list
+            used by this website.
+        </p>
+
+        <div
+            id="scorestreakGuideList"
+            class="scorestreaks"
+        ></div>
+
+    </article>
+
+    <article class="info-card">
+
+        <h2>
+            Important Note
+        </h2>
+
+        <p>
+            Scorestreak names and their exact functions can differ
+            between Call of Duty titles.
+        </p>
+
+        <p>
+            The scorestreaks on this website are demonstration data.
+        </p>
+
+    </article>
+
+</section>
+
+<section
+    id="mapsGuidePage"
+    class="info-page hidden"
+>
+
+    <h1>
+        Call of Duty Map Guide
+    </h1>
+
+    <button
+        class="back-button"
+        onclick="showPage('statsPage')"
+    >
+        ← BACK TO MY STATS
+    </button>
+
+    <p style="text-align:center;">
+        These are the maps included in this website.
+    </p>
+
+    <div
+        id="mapGuideGrid"
+        class="map-guide-grid"
+    ></div>
+
+</section>
+
 </main>
 
 <script>
+
 const scorestreaks = [
     "UAV",
     "Hunter Killer",
@@ -589,51 +843,63 @@ const scorestreaks = [
 const maps = [
     {
         name: "Rust",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/rust.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/rust.jpeg?raw=true",
+        description: "A small industrial map centered around a tall central structure. Its compact layout creates frequent close-range engagements."
     },
     {
         name: "Nuketown",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/nuketown.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/nuketown.jpeg?raw=true",
+        description: "A compact suburban map with two houses and a central street. The map is known for fast action and short sightlines."
     },
     {
         name: "Shipment",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/shipment.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/shipment.jpeg?raw=true",
+        description: "A very small cargo-container map. The limited space creates extremely close engagements and rapid movement."
     },
     {
         name: "Terminal",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/terminal.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/terminal.jpeg?raw=true",
+        description: "An airport-themed map featuring an indoor terminal area and outdoor sections with different engagement distances."
     },
     {
         name: "Raid",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/raid.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/raid.jpeg?raw=true",
+        description: "A mansion-themed map with indoor rooms, outdoor areas, and multiple routes between major sections."
     },
     {
         name: "Highrise",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/highrise.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/highrise.jpeg?raw=true",
+        description: "A construction-site rooftop map with open sightlines, indoor offices, and elevated positions."
     },
     {
         name: "Firing Range",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/firing-range.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/firing-range.jpeg?raw=true",
+        description: "A military training-range style map with lanes, buildings, cover, and different engagement distances."
     },
     {
         name: "Crash",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/crash.jpg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/crash.jpg?raw=true",
+        description: "A damaged urban environment built around a crashed helicopter with buildings, streets, and interior areas."
     },
     {
         name: "Shoot House",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/shoothouse.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/shoothouse.jpeg?raw=true",
+        description: "A compact training environment with lanes, obstacles, buildings, and multiple combat angles."
     },
     {
         name: "Standoff",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/standoff.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/standoff.jpeg?raw=true",
+        description: "A small town-style map with buildings, roads, and central routes supporting several engagement ranges."
     },
     {
         name: "Piccadilly",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/piccadilly.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/piccadilly.jpeg?raw=true",
+        description: "A London-themed map centered around a damaged shopping and transportation area."
     },
     {
         name: "Vacant",
-        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/vacant.jpeg?raw=true"
+        image: "https://github.com/ktschudny-spec/CallofDuty-Tracker/blob/main/vacant.jpeg?raw=true",
+        description: "A compact abandoned-office style map with interconnected indoor rooms, corridors, and a small outdoor area."
     }
 ];
 
@@ -644,6 +910,7 @@ function randomNumber(min, max) {
 }
 
 function shuffle(array) {
+
     const newArray = [...array];
 
     for (
@@ -651,6 +918,7 @@ function shuffle(array) {
         i > 0;
         i--
     ) {
+
         const j = Math.floor(
             Math.random() * (i + 1)
         );
@@ -665,6 +933,31 @@ function shuffle(array) {
     }
 
     return newArray;
+}
+
+function showPage(pageId) {
+
+    const pages = [
+        "loginPage",
+        "statsPage",
+        "statsGuidePage",
+        "scorestreakGuidePage",
+        "mapsGuidePage"
+    ];
+
+    pages.forEach(function(id) {
+
+        document
+            .getElementById(id)
+            .classList
+            .toggle(
+                "hidden",
+                id !== pageId
+            );
+
+    });
+
+    window.scrollTo(0, 0);
 }
 
 function viewStats() {
@@ -695,13 +988,7 @@ function viewStats() {
     ).textContent =
         "Player: " + username;
 
-    document.getElementById(
-        "loginPage"
-    ).classList.add("hidden");
-
-    document.getElementById(
-        "statsPage"
-    ).classList.remove("hidden");
+    showPage("statsPage");
 
     generateStats();
 
@@ -751,10 +1038,7 @@ function generateStats() {
         mostUsed.map(function(item) {
 
             return `
-                <div
-                    class="scorestreak"
-                    role="listitem"
-                >
+                <div class="scorestreak">
                     ${item}
                 </div>
             `;
@@ -767,10 +1051,7 @@ function generateStats() {
         leastUsed.map(function(item) {
 
             return `
-                <div
-                    class="scorestreak"
-                    role="listitem"
-                >
+                <div class="scorestreak">
                     ${item}
                 </div>
             `;
@@ -805,22 +1086,15 @@ function generateStats() {
         "leastPlayedImage",
         leastPlayed
     );
-
-    document.getElementById(
-        "statsAnnouncement"
-    ).textContent =
-        "New statistics have been generated.";
 }
 
-function setMapImage(
-    imageId,
-    map
-) {
+function setMapImage(imageId, map) {
 
     const image =
         document.getElementById(imageId);
 
-    image.src = map.image;
+    image.src =
+        map.image;
 
     image.alt =
         "Image of " +
@@ -831,40 +1105,16 @@ function setMapImage(
 
         image.onerror = null;
 
-        const errorBox =
-            document.createElement("div");
+        image.removeAttribute("src");
 
-        errorBox.className =
-            "image-error";
-
-        errorBox.setAttribute(
-            "role",
-            "img"
-        );
-
-        errorBox.setAttribute(
-            "aria-label",
-            map.name +
-            " map image unavailable"
-        );
-
-        errorBox.textContent =
-            map.name +
-            " image unavailable";
-
-        image.replaceWith(errorBox);
+        image.style.background =
+            "#241a1a";
     };
 }
 
 function logout() {
 
-    document.getElementById(
-        "statsPage"
-    ).classList.add("hidden");
-
-    document.getElementById(
-        "loginPage"
-    ).classList.remove("hidden");
+    showPage("loginPage");
 
     document.getElementById(
         "username"
@@ -879,55 +1129,111 @@ function logout() {
     ).focus();
 }
 
-document.getElementById(
-    "username"
-).addEventListener(
-    "keydown",
-    function(event) {
+function buildGuides() {
 
-        if (event.key === "Enter") {
+    document.getElementById(
+        "scorestreakGuideList"
+    ).innerHTML =
 
-            event.preventDefault();
+        scorestreaks.map(function(item) {
 
-            viewStats();
+            return `
+                <div class="scorestreak">
+                    ${item}
+                </div>
+            `;
+
+        }).join("");
+
+
+    document.getElementById(
+        "mapGuideGrid"
+    ).innerHTML =
+
+        maps.map(function(map) {
+
+            return `
+                <article class="map-guide-card">
+
+                    <img
+                        src="${map.image}"
+                        alt="Image of ${map.name} Call of Duty map"
+                        onerror="
+                            this.removeAttribute('src');
+                            this.style.background='#241a1a';
+                        "
+                    >
+
+                    <div>
+
+                        <h3>
+                            ${map.name}
+                        </h3>
+
+                        <p>
+                            ${map.description}
+                        </p>
+
+                    </div>
+
+                </article>
+            `;
+
+        }).join("");
+}
+
+document
+    .getElementById("username")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                viewStats();
+            }
+
         }
-    }
-);
+    );
 
 document.addEventListener(
     "keydown",
     function(event) {
 
         const statsPage =
-            document.getElementById(
-                "statsPage"
-            );
+            document.getElementById("statsPage");
 
         if (
-            statsPage.classList.contains(
-                "hidden"
-            )
+            statsPage.classList.contains("hidden")
         ) {
             return;
         }
 
-        const generateButton =
+        const focusable = [
+
             document.getElementById(
                 "generateButton"
-            );
+            ),
 
-        const logoutButton =
+            ...document.querySelectorAll(
+                ".info-button"
+            ),
+
             document.getElementById(
                 "logoutButton"
-            );
+            )
+
+        ];
 
         const current =
             document.activeElement;
 
-        if (
-            current !== generateButton &&
-            current !== logoutButton
-        ) {
+        const index =
+            focusable.indexOf(current);
+
+        if (index === -1) {
             return;
         }
 
@@ -938,7 +1244,10 @@ document.addEventListener(
 
             event.preventDefault();
 
-            logoutButton.focus();
+            focusable[
+                (index + 1) %
+                focusable.length
+            ].focus();
         }
 
         if (
@@ -948,7 +1257,10 @@ document.addEventListener(
 
             event.preventDefault();
 
-            generateButton.focus();
+            focusable[
+                (index - 1 + focusable.length) %
+                focusable.length
+            ].focus();
         }
 
         if (event.key === "Enter") {
@@ -959,6 +1271,9 @@ document.addEventListener(
         }
     }
 );
+
+buildGuides();
+
 </script>
 
 </body>
