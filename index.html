@@ -1305,6 +1305,60 @@ buildGuides();
     });
 </script>
 
+<section id="feedback-form">
+    <h2>Call of Duty Tracker Feedback</h2>
+
+    <form id="feedbackForm">
+        <label for="feedbackName">Your Name:</label>
+        <input type="text" id="feedbackName"
+               name="feedbackName" required>
+
+        <br><br>
+
+        <label for="feedback">Your Feedback:</label>
+        <textarea id="feedback" name="feedback"
+                  required></textarea>
+
+        <br><br>
+
+        <button type="submit">Submit Feedback</button>
+        <p id="feedbackMessage" role="status"></p>
+    </form>
+</section>
+
+<script>
+document.getElementById("feedbackForm").addEventListener(
+    "submit", function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("feedbackName").value.trim();
+        const feedback = document.getElementById("feedback").value.trim();
+
+        if (!name || !feedback) {
+            document.getElementById("feedbackMessage").textContent =
+                "Please complete both fields.";
+            return;
+        }
+
+        document.getElementById("feedbackMessage").textContent =
+            "Thank you, " + name + "! Your feedback was submitted.";
+
+        this.reset();
+    }
+);
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
 </body>
 </html>
  
