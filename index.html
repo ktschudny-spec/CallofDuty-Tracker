@@ -1285,6 +1285,26 @@ buildGuides();
 
 </script>
     
+<script> 
+    document.getElementById("usernameForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("codUsername").value.trim();
+
+        if (username === "") { 
+            document.getElementById("formMessage").textContent = 
+                "Please enter your Call of Duty Username.";
+            return;
+        }
+
+        document.getElementById("formMessage").textContent = 
+            "Loading stats for " + username + "...";
+
+        console.log("Username submitted:", username); 
+
+    });
+</script>
+
 </body>
 </html>
  
