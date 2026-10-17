@@ -8,24 +8,6 @@ html {
 }
 
 
-  <article class="info-card">
-
-        <dl>
-
-    <dt>Kills</dt>
-    <dd>
-        A kill is counted in this tracker when you eliminate an opponent in a match.
-    </dd>
-
-    <dt>Deaths</dt>
-    <dd>
-        A death is counted in the tracker when you get eliminated by an opponent.
-    </dd>
-
-    <dt>Highest Streak</dt>
-    <dd>
-        Your highest streak is the biggest amount of kills that you have gotten without dying.
-    </dd>
             dl {
     line-height: 1.6;
 }
